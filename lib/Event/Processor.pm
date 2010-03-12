@@ -6,6 +6,7 @@ use strict;
 our $VERSION = '0.01';
 
 use Event::Processor::Kernel;
+use Event::Processor::Service::Memory;
 use Event::Processor::Service::Logger;
 
 has kernel => (
@@ -32,6 +33,10 @@ sub _build_kernel {
             }
         )
     );
+    $k->add_service(
+        Event::Processor::Service::Memory->new
+    );
+
     return $k;
 }
 
@@ -58,7 +63,9 @@ Perhaps a little code snippet.
 
     use Event::Processor;
 
-    my $foo = Event::Processor->new();
+    my $foo = Event::Processor->new;
+
+    $foo->process($event); # things happen!
     ...
 
 =head1 EXPORT
