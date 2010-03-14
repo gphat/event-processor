@@ -1,7 +1,7 @@
-package Event::Processor::Rule::True;
+package Event::Processor::Rule::Or;
 use Moose;
 
-with 'Event::Processor::Rule', 'Event::Processor::Container';
+with 'Event::Processor::Rule', 'Event::Processor::Rule::Container';
 
 sub evaluate {
     my ($self, $event) = @_;
