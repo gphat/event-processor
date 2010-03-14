@@ -17,6 +17,12 @@ has name => (
     required => 1
 );
 
+has occurred => (
+    is => 'ro',
+    isa => 'Num',
+    default => sub { time() }
+);
+
 # How long this event is retained
 has time_to_live => (
     is => 'ro',
