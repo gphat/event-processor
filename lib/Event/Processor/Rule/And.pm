@@ -4,7 +4,7 @@ use Moose;
 with 'Event::Processor::Rule', 'Event::Processor::Rule::Container';
 
 sub evaluate {
-    my ($self, $event) = @_;
+    my ($self, $event, $kernel) = @_;
 
     foreach my $rule (@{ $self->rules }) {
         my $retval = $rule->evaluate($event);
