@@ -1,7 +1,8 @@
 package Event::Processor::Memory;
 use Moose;
 
-# Replace this with something good..
+# Replace this with something good..  As it stands it's a very naive expiring
+# implementation.
 
 has memory => (
     traits => [qw(Hash)],
