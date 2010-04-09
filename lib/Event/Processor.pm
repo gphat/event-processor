@@ -15,6 +15,7 @@ has kernel => (
     lazy_build => 1,
 );
 
+
 sub _build_kernel {
     my ($self) = @_;
 
@@ -39,13 +40,6 @@ sub _build_kernel {
 
     return $k;
 }
-
-# has rules => (
-#     traits => [qw(Array)],
-#     is => 'ro',
-#     isa => 'ArrayRef[]'
-#     default => []
-# );
 
 1;
 
