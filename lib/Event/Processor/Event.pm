@@ -23,11 +23,16 @@ has occurred => (
     default => sub { time() }
 );
 
-# How long this event is retained
-has time_to_live => (
-    is => 'ro',
-    isa => 'Num',
-    default => 0
+has parameters => (
+    traits  => [ 'Hash' ],
+    is      => 'rw',
+    isa     => 'HashRef[Str]',
+    default => sub { {} },
+    handles => {
+        parameters_names=> 'keys',
+        get_parameter   => 'get',
+        set_parameter   => 'set',
+    },
 );
 
 1;

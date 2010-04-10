@@ -15,6 +15,16 @@ has kernel => (
     lazy_build => 1,
 );
 
+has rules => (
+     traits => [qw(Hash)],
+     is => 'ro',
+     isa => 'HashRef',
+     default => sub { {} },
+     handles => {
+         get_rule => 'get',
+         set_rule => 'set'
+     }
+);
 
 sub _build_kernel {
     my ($self) = @_;
@@ -39,6 +49,18 @@ sub _build_kernel {
     );
 
     return $k;
+}
+
+sub process {
+    my ($self, $event) = @_;
+
+    my $rule = $self->get_rule($event->name);
+    if(defined($rule)) {
+        my $retval = $rule->condition($self->kernel, $event);
+        if($retval) {
+            $rule->result($self->kernel, $event);
+        }
+    }
 }
 
 1;
