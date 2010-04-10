@@ -69,26 +69,17 @@ __END__
 
 =head1 NAME
 
-Event::Processor - The great new Event::Processor!
+Event::Processor - Event Processing system
 
 =head1 SYNOPSIS
 
-Quick summary of what the module does.
-
-Perhaps a little code snippet.
-
     use Event::Processor;
 
-    my $foo = Event::Processor->new;
+    my $proc = Event::Processor->new;
 
-    $foo->process($event); # things happen!
-    ...
+    $proc->process($event); # Stuff happens!
 
-=head1 EXPORT
-
-A list of functions that can be exported.  You can delete this section
-if you don't export anything, such as for a purely object-oriented module.
-
+=head1 DESCRIPTION
 
 =head1 AUTHOR
 
@@ -103,6 +94,5 @@ under the terms of either: the GNU General Public License as published
 by the Free Software Foundation; or the Artistic License.
 
 See http://dev.perl.org/licenses/ for more information.
-
 
 =cut
