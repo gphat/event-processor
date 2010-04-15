@@ -74,12 +74,34 @@ Event::Processor - Event Processing system
 
     my $proc = Event::Processor->new;
 
+    my $rule = My::Rule->new;
+
+    $proc->set_rule('foo.bar', $rule);
+
+    my $event = Event::Processor::Event->new(
+        id => 1,
+        name => 'foo.bar'
+    );
+    
     $proc->process($event); # Stuff happens!
 
 =head1 DESCRIPTION
 
 Event::Processor is a naive implementation of Complex Event Processing
 L<http://en.wikipedia.org/wiki/Complex_event_processing>.
+
+Event::Processor allows you to define rules that will be executed when
+certain events are processed.  When combined with a messaging mechanism and
+some form of storage you can create a system that builds complex behaviors
+from simple rules.
+
+=head1 EXAMPLE
+
+B<Note:> This example uses L<Event::Processor::Service::Redis> for storage.
+
+The aforementioned Wikipedia article describes a CEP scenario where a car's
+sensors react to changes in tire pressure.  We can build an example here
+that will act the same way.
 
 =head1 AUTHOR
 
