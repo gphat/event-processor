@@ -2,7 +2,7 @@ package Event::Processor::Memory;
 use Moose;
 
 # Replace this with something good..  As it stands it's a very naive expiring
-# implementation.
+# implementation.  Should probably use Tie::Hash::Expire or something...
 
 has memory => (
     traits => [qw(Hash)],
@@ -38,3 +38,35 @@ sub recall {
 }
 
 1;
+
+__END__
+
+=head1 NAME
+
+Event::Processor::Service::Memory - Naive "memory" service
+
+=head1 SYNOPSIS
+
+    my $proc = Event::Processor->new;
+
+    my $log = $proc->kernel->fetch('memory')->get;
+
+=head1 DESCRIPTION
+
+Naive memory service.  Useful for testing.
+
+=head1 AUTHOR
+
+Cory G Watson, C<< <gphat at cpan.org> >>
+
+=head1 COPYRIGHT & LICENSE
+
+Copyright 2010 Cory G Watson.
+
+This program is free software; you can redistribute it and/or modify it
+under the terms of either: the GNU General Public License as published
+by the Free Software Foundation; or the Artistic License.
+
+See http://dev.perl.org/licenses/ for more information.
+
+=cut

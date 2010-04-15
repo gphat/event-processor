@@ -1,11 +1,20 @@
+use strict;
+use lib qw(t/lib);
+
 use Test::More;
 
 use Event::Processor;
 use Event::Processor::Event;
 use Event::Processor::Rule;
+use Event::Processor::Service::Memory;
 use Rule::True;
 
 my $proc = Event::Processor->new;
+
+my $kernel = $proc->kernel;
+$kernel->add_service(
+    Event::Processor::Service::Memory->new
+);
 
 my $rule = Rule::True->new;
 

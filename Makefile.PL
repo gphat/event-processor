@@ -10,7 +10,6 @@ build_requires 'Test::More';
 requires 'Bread::Board';
 requires 'Moose';
 requires 'MooseX::Clone';
-requires 'Redis';
 
 WriteAll;
 

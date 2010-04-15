@@ -44,9 +44,6 @@ sub _build_kernel {
             }
         )
     );
-    $k->add_service(
-        Event::Processor::Service::Memory->new
-    );
 
     return $k;
 }
@@ -80,6 +77,9 @@ Event::Processor - Event Processing system
     $proc->process($event); # Stuff happens!
 
 =head1 DESCRIPTION
+
+Event::Processor is a naive implementation of Complex Event Processing
+L<http://en.wikipedia.org/wiki/Complex_event_processing>.
 
 =head1 AUTHOR
 
