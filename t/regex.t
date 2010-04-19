@@ -18,7 +18,7 @@ $kernel->add_service(
 
 my $rule = Rule::True->new;
 
-$proc->add_rule('foo.bar', $rule);
+$proc->add_regex_rule(qr/^foo/, $rule);
 
 my $event = Event::Processor::Event->new(
     id => 1,

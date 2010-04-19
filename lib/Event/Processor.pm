@@ -15,10 +15,21 @@ has kernel => (
     lazy_build => 1,
 );
 
-has rules => (
+has regex_rules => (
      traits => [qw(Hash)],
      is => 'ro',
      isa => 'HashRef',
+     default => sub { {} },
+     handles => {
+         get_regex_rule => 'get',
+         set_regex_rule => 'set'
+     }
+);
+
+has rules => (
+     traits => [qw(Hash)],
+     is => 'ro',
+     isa => 'HashRef[ArrayRef]',
      default => sub { {} },
      handles => {
          get_rule => 'get',
@@ -48,14 +59,53 @@ sub _build_kernel {
     return $k;
 }
 
+sub add_rule {
+    my ($self, $name, $rule) = @_;
+
+    my $rules = $self->get_rule($name);
+    if($rules) {
+        push(@{ $rules }, $rule);
+    } else {
+        $self->set_rule($name, [ $rule ]);
+    }
+}
+
+sub add_regex_rule {
+    my ($self, $name, $rule) = @_;
+
+    my $rules = $self->get_regex_rule($name);
+    if($rules) {
+        push(@{ $rules }, $rule);
+    } else {
+        $self->set_regex_rule($name, [ $rule ]);
+    }
+}
+
 sub process {
     my ($self, $event) = @_;
 
-    my $rule = $self->get_rule($event->name);
-    if(defined($rule)) {
-        my $retval = $rule->condition($self->kernel, $event);
-        if($retval) {
-            $rule->result($self->kernel, $event);
+    my $rules = $self->get_rule($event->name);
+    if(defined($rules)) {
+        foreach my $rule (@{ $rules }) {
+            my $retval = $rule->condition($self->kernel, $event);
+            if($retval) {
+                $rule->result($self->kernel, $event);
+            }
+        }
+    }
+
+    my @regexes = keys(%{ $self->regex_rules });
+    if(scalar(@regexes)) {
+        foreach my $regex (@regexes) {
+            if($event->name =~ $regex) {
+                my $rules = $self->get_regex_rule($regex);
+                foreach my $rule (@{ $rules }) {
+                    my $retval = $rule->condition($self->kernel, $event);
+                    if($retval) {
+                        $rule->result($self->kernel, $event);
+                    }
+                }
+            }
         }
     }
 }
@@ -76,7 +126,7 @@ Event::Processor - Event Processing system
 
     my $rule = My::Rule->new;
 
-    $proc->set_rule('foo.bar', $rule);
+    $proc->add_rule('foo.bar', $rule);
 
     my $event = Event::Processor::Event->new(
         id => 1,
