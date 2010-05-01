@@ -1,6 +1,14 @@
 package Event::Processor::Event;
 use Moose;
 
+use Event::Processor::Context;
+
+has context => (
+    is => 'ro',
+    isa => 'Event::Processor::Context',
+    default => sub { Event::Processor::Context->new }
+);
+
 # Unique ID that identifies this event.
 has id => (
     is => 'ro',
@@ -21,35 +29,48 @@ has occurred => (
     default => sub { time() }
 );
 
-has parameters => (
-    traits  => [ 'Hash' ],
-    is      => 'rw',
-    isa     => 'HashRef[Str]',
-    default => sub { {} },
-    handles => {
-        parameters_names=> 'keys',
-        get_parameter   => 'get',
-        set_parameter   => 'set',
-    },
-);
-
 1;
 
 __END__
 
 =head1 NAME
 
-Event::Processor::Event - Naive "memory" service
+Event::Processor::Event - An event!
 
 =head1 SYNOPSIS
 
-    my $proc = Event::Processor->new;
-
-    my $log = $proc->kernel->fetch('memory')->get;
+    my $ctx = Event::Processor::Event->new(
+        id => $id, # Maybe a UUID,
+        name => 'tire.pressure_change',
+        occurred => time, # defaults to time()
+    );
+    $ctx->param('tire', '0'); # Maybe front driver is 0?
 
 =head1 DESCRIPTION
 
-Naive memory service.  Useful for testing.
+An event is a stimulus for Event::Processor.  Events are passed in and used
+as input for rule evaluation.
+
+=head1 ATTRIBUTES
+
+=head2 context
+
+This event's L<Event::Processor::Context>.  Defaults to a new instance of
+same.
+
+=head2 id
+
+This event's ID
+
+=head2 name
+
+This event's name.
+
+=head2 occurred
+
+The time that ths event occurred.
+
+=head1 METHODS
 
 =head1 AUTHOR
 

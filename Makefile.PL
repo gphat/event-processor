@@ -9,7 +9,7 @@ build_requires 'Test::More';
 
 requires 'Bread::Board';
 requires 'Moose';
-requires 'MooseX::Clone';
+requires 'MooseX::Param';
 
 WriteAll;
 
