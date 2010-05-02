@@ -1,4 +1,5 @@
 package Event::Processor;
+use namespace::autoclean;
 use Moose;
 use warnings;
 use strict;
@@ -8,6 +9,8 @@ our $VERSION = '0.01';
 use Event::Processor::Kernel;
 use Event::Processor::Service::Memory;
 use Event::Processor::Service::Logger;
+
+use Time::HiRes qw(time);
 
 has kernel => (
     is => 'ro',

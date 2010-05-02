@@ -6,7 +6,8 @@ use Event::Processor::Context;
 has context => (
     is => 'ro',
     isa => 'Event::Processor::Context',
-    default => sub { Event::Processor::Context->new }
+    default => sub { Event::Processor::Context->new },
+    handles => [qw(param)]
 );
 
 # Unique ID that identifies this event.

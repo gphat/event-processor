@@ -10,6 +10,9 @@ build_requires 'Test::More';
 requires 'Bread::Board';
 requires 'Moose';
 requires 'MooseX::Param';
+requires 'Test::Exception';
+requires 'Time::HiRes';
+requires 'namespace::autoclean';
 
 WriteAll;
 
